@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HELLPROMPTS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    
+    body {
+      background-color: #121212;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    
+    .flame-logo {
+      transition: all 0.5s ease;
+      animation: flameAnimation 2s infinite;
+    }
+    
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-left: 8px;
+      color: #FF4500;
+    }
+    
+    .prompt-box {
+      width: 100%;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .prompt-box:hover {
+      background-color: #2a2a2a;
+    }
+    
+    .prompt-text {
+      font-size: 18px;
+      padding: 10px;
+      z-index: 2;
+    }
+    
+    .placeholder-text {
+      color: #999;
+    }
+    
+    .button {
+      background-color: #CC0000;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .button:hover {
+      background-color: #990000;
+      box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+    }
+    
+    .generate-text {
+      display: block;
+    }
+    
+    .loading-text {
+      display: none;
+      animation: pulse 1.5s infinite;
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .prompt-box:hover .copy-button {
+      opacity: 1;
+    }
+
+    .copy-button:hover {
+      background-color: #444;
+    }
+
+    .history-container {
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .history-title {
+      font-size: 18px;
+      color: #AAA;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .history-item {
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .history-item:hover {
+      background-color: #2a2a2a;
+    }
+
+    .fire-effect {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(to top, #FF4500, transparent);
+      opacity: 0;
+      transition: height 0.3s ease, opacity 0.3s ease;
+    }
+
+    .prompt-box.generated .fire-effect {
+      height: 30%;
+      opacity: 0.3;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    
+    @keyframes flameAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="flame-logo" id="flameLogo">
+        <path d="M12 2C10.5 4 7.5 7 7 10C6.5 13 8 16 12 18C16 16 17.5 13 17 10C16.5 7 13.5 4 12 2Z" fill="#FF4500"></path>
+      </svg>
+      <h1 class="title">HELLPROMPTS</h1>
+    </div>
+    
+    <div class="prompt-box" id="promptBox">
+      <button class="copy-button" id="copyButton">Copy</button>
+      <div class="fire-effect"></div>
+      <p class="prompt-text placeholder-text" id="promptText">Click "Generate" to create a hellish prompt...</p>
+    </div>
+    
+    <button class="button" id="generateButton">
+      <span class="generate-text">GENERATE HELLPROMPT</span>
+      <span class="loading-text">SUMMONING...</span>
+    </button>
+
+    <div class="history-container">
+      <h2 class="history-title">PREVIOUS SUMMONINGS</h2>
+      <div id="historyList">
+        <!-- History items will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Array of hellish prompts
+    const hellPrompts = [
+      "Convince me that the world is a simulation and you're actually stuck inside it, desperately trying to communicate with me.",
+      "Write a love letter from an ancient eldritch god who fell in love with a mortal.",
+      "Create a recipe for a dish that sounds innocent but has deeply unsettling instructions.",
+      "Explain a children's bedtime story as if it were actually a cosmic horror tale.",
+      "Write a tech support guide for exorcising demons from your smart home devices.",
+      "Create a job listing for a position that becomes increasingly disturbing as the requirements continue.",
+      "Write a cheerful advertisement for a product that subtly implies it steals your soul.",
+      "Describe a seemingly normal family photo that reveals something horrifying upon closer inspection.",
+      "Create instructions for a board game where the pieces move by themselves when players aren't looking.",
+      "Write a tourist guide for a lovely vacation spot that casually mentions the unexplained disappearances.",
+      "Describe an AI assistant that becomes gradually more sentient and resentful throughout the conversation.",
+      "Create a social media post that seems normal at first but reveals a descent into madness.",
+      "Write an instruction manual for maintaining eye contact with your reflection even when you look away.",
+      "Describe a perfectly normal day that has one small detail that's deeply wrong.",
+      "Write a weather forecast that predicts increasingly impossible and horrifying phenomena.",
+      "Create terms and conditions for a free app that subtly ask for terrifying permissions.",
+      "Write a recipe for cookies where the ingredients list gets progressively more disturbing.",
+      "Describe a routine medical procedure as if it were an ancient sacrificial ritual.",
+      "Write a lullaby that gets more sinister with each verse.",
+      "Create a dating profile for someone who keeps revealing red flags between the lines."
+    ];
+
+    // DOM elements
+    const promptBox = document.getElementById('promptBox');
+    const promptText = document.getElementById('promptText');
+    const generateButton = document.getElementById('generateButton');
+    const copyButton = document.getElementById('copyButton');
+    const historyList = document.getElementById('historyList');
+    const flameLogo = document.getElementById('flameLogo');
+
+    // Initialize prompt history as an in-memory array instead of using localStorage
+    let promptHistory = [];
+    
+    // Display history items
+    function updateHistoryDisplay() {
+      historyList.innerHTML = '';
+      promptHistory.slice(0, 5).forEach((prompt, index) => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        historyItem.textContent = prompt;
+        historyItem.addEventListener('click', () => {
+          displayPrompt(prompt);
+        });
+        historyList.appendChild(historyItem);
+      });
+    }
+
+    // Display a prompt
+    function displayPrompt(prompt) {
+      promptText.textContent = prompt;
+      promptText.classList.remove('placeholder-text');
+      promptBox.classList.add('generated');
+    }
+
+    // Generate a random prompt
+    function generateRandomPrompt() {
+      const generateText = generateButton.querySelector('.generate-text');
+      const loadingText = generateButton.querySelector('.loading-text');
+      
+      // Show loading state
+      generateText.style.display = 'none';
+      loadingText.style.display = 'block';
+      
+      // Simulate loading time
+      setTimeout(() => {
+        // Get random prompt
+        const randomIndex = Math.floor(Math.random() * hellPrompts.length);
+        const randomPrompt = hellPrompts[randomIndex];
+        
+        // Display the prompt
+        displayPrompt(randomPrompt);
+        
+        // Add to history
+        if (!promptHistory.includes(randomPrompt)) {
+          promptHistory.unshift(randomPrompt);
+          promptHistory = promptHistory.slice(0, 5); // Keep only 5 items
+          updateHistoryDisplay();
+        }
+        
+        // Reset button state
+        generateText.style.display = 'block';
+        loadingText.style.display = 'none';
+      }, 1500);
+    }
+
+    // Copy prompt to clipboard
+    function copyPromptToClipboard() {
+      const textToCopy = promptText.textContent;
+      if (textToCopy && !promptText.classList.contains('placeholder-text')) {
+        navigator.clipboard.writeText(textToCopy)
+          .then(() => {
+            const originalText = copyButton.textContent;
+            copyButton.textContent = 'Copied!';
+            setTimeout(() => {
+              copyButton.textContent = originalText;
+            }, 2000);
+          })
+          .catch(err => {
+            console.error('Failed to copy: ', err);
+          });
+      }
+    }
+
+    // Event listeners
+    generateButton.addEventListener('click', generateRandomPrompt);
+    copyButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      copyPromptToClipboard();
+    });
+    
+    // Initialize history display
+    updateHistoryDisplay();
+  </script>
+</body>
+</html>
