@@ -236,7 +236,13 @@
     </div>
   </div>
 
-  <script src="cleaned_prompts.js"></script>
+  <script>// Load prompts
+    let hellPrompts = [];
+    fetch('hellPrompts.json')
+      .then(r => r.json())
+      .then(data => { hellPrompts = data; })
+      .catch(err => console.error('Failed to load prompts:', err));
+</script>
 <script>// DOM elements
     const promptBox = document.getElementById('promptBox');
     const promptText = document.getElementById('promptText');
