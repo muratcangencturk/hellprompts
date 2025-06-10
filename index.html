@@ -276,8 +276,17 @@
       })
       .catch(err => console.error('Failed to load prompts:', err));
 
-    // Initialize prompt history as an in-memory array instead of using localStorage
+    // Load prompt history from localStorage so it persists across sessions
     let promptHistory = [];
+    try {
+      const storedHistory = localStorage.getItem('promptHistory');
+      if (storedHistory) {
+        promptHistory = JSON.parse(storedHistory);
+      }
+    } catch (e) {
+      console.error('Failed to parse history from localStorage:', e);
+      promptHistory = [];
+    }
     
     // Display history items
     function updateHistoryDisplay() {
@@ -322,6 +331,7 @@
         if (!promptHistory.includes(randomPrompt)) {
           promptHistory.unshift(randomPrompt);
           promptHistory = promptHistory.slice(0, 5); // Keep only 5 items
+          localStorage.setItem('promptHistory', JSON.stringify(promptHistory));
           updateHistoryDisplay();
         }
         
