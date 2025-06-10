@@ -14,6 +14,20 @@ The page will keep a short history of previously generated prompts during your s
 
 If you want to change the set of prompts, edit `hellPrompts.json` and reload `index.html`. The page will automatically use your updated prompt list.
 
+### Sanitizing Prompts
+
+Use `sanitize_prompts.py` to remove control characters from your prompt list.
+
+```
+python sanitize_prompts.py
+```
+
+By default it reads from `hellPrompts.json` and writes the cleaned prompts back to the same file. You can specify custom input and output files:
+
+```
+python sanitize_prompts.py -i my_prompts.json -o cleaned.json
+```
+
 ## License
 
 This project is distributed under the [Apache License 2.0](LICENSE).
