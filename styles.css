@@ -16,12 +16,13 @@
       padding: 20px;
     }
     
-    .container {
+.container {
       max-width: 600px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
     }
     
     .header {
@@ -216,5 +217,19 @@
     }
     .social-media-links a:hover svg {
       fill: #FF4500; /* Hover color - matches title */
+    }
+
+    .lang-toggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      color: #FF4500;
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 8px;
     }
 
