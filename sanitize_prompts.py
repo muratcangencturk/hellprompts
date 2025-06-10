@@ -1,5 +1,4 @@
 import json
-import sys
 import re
 
 CONTROL_CHARS = ''.join(chr(i) for i in range(32)) + chr(127)
