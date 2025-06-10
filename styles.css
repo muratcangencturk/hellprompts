@@ -1,0 +1,29 @@
+@media (max-width: 600px) {
+  .prompt-box {
+    padding: 16px;
+    min-height: 150px;
+  }
+
+  .prompt-text {
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .button {
+    padding: 10px 20px;
+    font-size: 14px;
+    max-width: none;
+  }
+
+  .history-title {
+    font-size: 16px;
+  }
+
+  .history-item {
+    font-size: 12px;
+  }
+}
+
