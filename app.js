@@ -4,6 +4,50 @@
     const copyButton = document.getElementById('copyButton');
     const historyList = document.getElementById('historyList');
     const flameLogo = document.getElementById('flameLogo');
+    const historyTitle = document.getElementById('historyTitle');
+    const orderText = document.getElementById('orderText');
+    const langToggle = document.querySelector('.lang-toggle');
+
+    const translations = {
+      en: {
+        generate: 'GENERATE HELLPROMPT',
+        loading: 'SUMMONING...',
+        loadingPrompts: 'LOADING PROMPTS...',
+        placeholder: 'Click "Generate" to create a hellish prompt...',
+        copy: 'Copy',
+        copied: 'Copied!',
+        historyTitle: 'PREVIOUS SUMMONINGS',
+        order: 'order all hellprompts via +905539837625'
+      },
+      tr: {
+        generate: 'CEHENNEM KOMUTU ÜRET',
+        loading: 'ÇAĞRILIYOR...',
+        loadingPrompts: 'İPUÇLARI YÜKLENİYOR...',
+        placeholder: 'Şeytani bir komut oluşturmak için "Üret"e tıklayın...',
+        copy: 'Kopyala',
+        copied: 'Kopyalandı!',
+        historyTitle: 'ÖNCEKİ ÇAĞRILMALAR',
+        order: 'tüm hellpromptları +905539837625 üzerinden sipariş edin'
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function applyTranslations(lang) {
+      const t = translations[lang];
+      document.documentElement.lang = lang;
+      generateText.textContent = t.generate;
+      loadingText.textContent = t.loading;
+      loadingPromptsText.textContent = t.loadingPrompts;
+      promptText.textContent = t.placeholder;
+      copyButton.textContent = t.copy;
+      historyTitle.textContent = t.historyTitle;
+      orderText.textContent = t.order;
+    }
+
+    function loadPrompts(lang) {
+      return fetch(`hellPrompts.${lang}.json`).then(r => r.json());
+    }
 
     const generateText = generateButton.querySelector('.generate-text');
     const loadingText = generateButton.querySelector('.loading-text');
@@ -16,8 +60,8 @@
     loadingPromptsText.style.display = 'block';
 
     let hellPrompts = [];
-    fetch('hellPrompts.json')
-      .then(r => r.json())
+    applyTranslations(currentLang);
+    loadPrompts(currentLang)
       .then(data => {
         hellPrompts = data;
         generateButton.disabled = false;
@@ -88,7 +132,7 @@
         navigator.clipboard.writeText(textToCopy)
           .then(() => {
             const originalText = copyButton.textContent;
-            copyButton.textContent = 'Copied!';
+            copyButton.textContent = translations[currentLang].copied;
             setTimeout(() => {
               copyButton.textContent = originalText;
             }, 2000);
@@ -104,6 +148,24 @@
     copyButton.addEventListener('click', (e) => {
       e.stopPropagation();
       copyPromptToClipboard();
+    });
+    langToggle.addEventListener('click', (e) => {
+      const lang = e.target.dataset.lang;
+      if (!lang || lang === currentLang) return;
+      currentLang = lang;
+      localStorage.setItem('lang', currentLang);
+      applyTranslations(currentLang);
+      generateButton.disabled = true;
+      loadingPromptsText.style.display = 'block';
+      generateText.style.display = 'none';
+      loadPrompts(currentLang)
+        .then(data => {
+          hellPrompts = data;
+          generateButton.disabled = false;
+          loadingPromptsText.style.display = 'none';
+          generateText.style.display = 'block';
+        })
+        .catch(err => console.error('Failed to load prompts:', err));
     });
     
     // Initialize history display
