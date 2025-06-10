@@ -1,6 +1,6 @@
 # HellPrompts
 
-HellPrompts is a small website that serves up creepy and creative prompts for writers and AI enthusiasts. The prompts are stored in `cleaned_prompts.js` and displayed through `index.html`. No build step is required; everything runs in the browser.
+HellPrompts is a small website that serves up creepy and creative prompts for writers and AI enthusiasts. The prompts are stored in `hellPrompts.json` and displayed through `index.html`. No build step is required; everything runs in the browser.
 
 ## Using Locally
 
@@ -12,7 +12,7 @@ The page will keep a short history of previously generated prompts during your s
 
 ## Regenerating Prompts Data
 
-If you want to change the set of prompts, edit `cleaned_prompts.js` and reload `index.html`. The page will automatically use your updated prompt list.
+If you want to change the set of prompts, edit `hellPrompts.json` and reload `index.html`. The page will automatically use your updated prompt list.
 
 ## License
 
