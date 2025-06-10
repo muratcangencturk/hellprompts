@@ -2,6 +2,11 @@
 
 HellPrompts is a small website that serves up creepy and creative prompts for writers and AI enthusiasts. The prompts are stored in `hellPrompts.json` and displayed through `index.html`. No build step is required; everything runs in the browser.
 
+## Project Overview
+
+The page randomly selects a line from the JSON file and shows it in the browser. A list of recently generated prompts is displayed underneath so you can easily copy your favorites. You can try it online at [hellprompts.com](https://hellprompts.com).
+
+
 ## Using Locally
 
 1. Clone this repository or download the files.
@@ -14,20 +19,19 @@ The page will keep a short history of previously generated prompts during your s
 
 If you want to change the set of prompts, edit `hellPrompts.json` and reload `index.html`. The page will automatically use your updated prompt list.
 
-### Sanitizing Prompts
+### Sanitizing the JSON
 
-Use `sanitize_prompts.py` to remove control characters from your prompt list.
+Run the helper script to clean control characters from the prompts:
 
-```
-python sanitize_prompts.py
+```bash
+python3 sanitize_prompts.py
 ```
 
-By default it reads from `hellPrompts.json` and writes the cleaned prompts back to the same file. You can specify custom input and output files:
+## Contributing
 
-```
-python sanitize_prompts.py -i my_prompts.json -o cleaned.json
-```
+Pull requests are welcome! Fork the repository, create a feature branch and send a PR describing your changes. You can add new prompts by editing `hellPrompts.json` or improve the site in any other way.
 
 ## License
 
 This project is distributed under the [Apache License 2.0](LICENSE).
+
