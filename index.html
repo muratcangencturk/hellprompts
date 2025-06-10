@@ -113,12 +113,22 @@
       background-color: #990000;
       box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
     }
-    
+
+    .button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
     .generate-text {
       display: block;
     }
-    
+
     .loading-text {
+      display: none;
+      animation: pulse 1.5s infinite;
+    }
+
+    .loading-prompts-text {
       display: none;
       animation: pulse 1.5s infinite;
     }
@@ -226,6 +236,7 @@
     <button class="button" id="generateButton">
       <span class="generate-text">GENERATE HELLPROMPT</span>
       <span class="loading-text">SUMMONING...</span>
+      <span class="loading-prompts-text">LOADING PROMPTS...</span>
     </button>
 
     <div class="history-container">
@@ -236,20 +247,34 @@
     </div>
   </div>
 
-  <script>// Load prompts
-    let hellPrompts = [];
-    fetch('hellPrompts.json')
-      .then(r => r.json())
-      .then(data => { hellPrompts = data; })
-      .catch(err => console.error('Failed to load prompts:', err));
-</script>
-<script>// DOM elements
+  <script>// DOM elements and prompts
     const promptBox = document.getElementById('promptBox');
     const promptText = document.getElementById('promptText');
     const generateButton = document.getElementById('generateButton');
     const copyButton = document.getElementById('copyButton');
     const historyList = document.getElementById('historyList');
     const flameLogo = document.getElementById('flameLogo');
+
+    const generateText = generateButton.querySelector('.generate-text');
+    const loadingText = generateButton.querySelector('.loading-text');
+    const loadingPromptsText = generateButton.querySelector('.loading-prompts-text');
+
+    // Disable button until prompts load
+    generateButton.disabled = true;
+    generateText.style.display = 'none';
+    loadingText.style.display = 'none';
+    loadingPromptsText.style.display = 'block';
+
+    let hellPrompts = [];
+    fetch('hellPrompts.json')
+      .then(r => r.json())
+      .then(data => {
+        hellPrompts = data;
+        generateButton.disabled = false;
+        loadingPromptsText.style.display = 'none';
+        generateText.style.display = 'block';
+      })
+      .catch(err => console.error('Failed to load prompts:', err));
 
     // Initialize prompt history as an in-memory array instead of using localStorage
     let promptHistory = [];
@@ -277,8 +302,8 @@
 
     // Generate a random prompt
     function generateRandomPrompt() {
-      const generateText = generateButton.querySelector('.generate-text');
-      const loadingText = generateButton.querySelector('.loading-text');
+
+      if (hellPrompts.length === 0) return;
       
       // Show loading state
       generateText.style.display = 'none';
