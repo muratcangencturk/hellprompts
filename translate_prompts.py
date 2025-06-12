@@ -21,9 +21,9 @@ for idx, text in enumerate(slice_prompts, start=START_INDEX+1):
     attempt = 0
     while True:
         try:
-            translated = translator.translate(text, src='en', dest='tr').text
+            translated = translator.translate(text, src="en", dest="tr").text
             break
-        except Exception as e:
+        except Exception:
             attempt += 1
             if attempt >= 5:
                 raise
