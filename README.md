@@ -22,10 +22,11 @@ Prompts are stored in JSON files named `hellPrompts.<lang>.json`. Edit `hellProm
 
 ### Sanitizing prompt files
 
-Remove control characters after editing to keep the data clean:
+Remove control characters after editing to keep the data clean. By default the
+script reads and writes `hellPrompts.en.json`:
 
 ```bash
-python sanitize_prompts.py -i hellPrompts.en.json -o hellPrompts.en.json
+python sanitize_prompts.py
 ```
 
 ### Translating prompt files
