@@ -1,4 +1,7 @@
-# HellPrompts ![License](https://img.shields.io/github/license/ianstormtaylor/slate) ![CI](https://github.com/yourusername/hellprompts/actions/workflows/ci.yml/badge.svg)
+# HellPrompts
+
+![License](https://img.shields.io/github/license/ianstormtaylor/slate)
+![CI](https://github.com/yourusername/hellprompts/actions/workflows/ci.yml/badge.svg)
 
 HellPrompts is an open source horror, dystopian and AI writing prompt generator. It runs entirely in the browser and delivers thousands of spooky ideas for storytellers and prompt engineers. Prompts live in language‑specific JSON files (e.g. `hellPrompts.en.json`) so you can add new languages or edit the existing ones with ease.
 

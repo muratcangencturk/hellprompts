@@ -5,7 +5,9 @@ import re
 CONTROL_CHARS = ''.join(chr(i) for i in range(32)) + chr(127)
 control_re = re.compile('[%s]' % re.escape(CONTROL_CHARS))
 
-parser = argparse.ArgumentParser(description="Remove control characters from a JSON list of prompts")
+parser = argparse.ArgumentParser(
+    description="Remove control characters from a JSON list of prompts"
+)
 parser.add_argument('-i', '--input', default='hellPrompts.en.json',
                     help='Input JSON file')
 parser.add_argument('-o', '--output', default='hellPrompts.en.json',

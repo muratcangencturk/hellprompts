@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,6 +13,18 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Check scripts compile
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
         run: |
-          python -m py_compile sanitize_prompts.py translate_prompts.py
+          python -m pip install --upgrade pip
+          pip install flake8 -r requirements.txt
+          npm install -g prettier
+      - name: Run flake8
+        run: flake8 .
+      - name: Run prettier
+        run: prettier --check "**/*.{js,css,html}"
+      - name: Check scripts compile
+        run: python -m py_compile sanitize_prompts.py translate_prompts.py
