@@ -1,38 +1,63 @@
-# HellPrompts
+# HellPrompts ![License](https://img.shields.io/github/license/ianstormtaylor/slate) ![CI](https://github.com/yourusername/hellprompts/actions/workflows/ci.yml/badge.svg)
 
-HellPrompts is a small website that serves up creepy and creative prompts for writers and AI enthusiasts. The prompts are stored in language specific JSON files (e.g. `hellPrompts.en.json`) and displayed through `index.html`. No build step is required; everything runs in the browser.
+HellPrompts is an open source horror, dystopian and AI writing prompt generator. It runs entirely in the browser and delivers thousands of spooky ideas for storytellers and prompt engineers. Prompts live in language‑specific JSON files (e.g. `hellPrompts.en.json`) so you can add new languages or edit the existing ones with ease.
 
-## Using Locally
+## Features
 
-1. Clone this repository or download the files.
-2. Open `index.html` in any modern web browser. You can double‑click the file or serve it via a simple local web server.
-3. Click the **Generate Hellprompt** button to create a new random prompt. Click it again any time you want to regenerate a new prompt.
-4. Use the **EN/TR** toggle in the top-left corner to switch languages. Your choice is remembered in the browser.
+- Random prompt generation with a click
+- English and Turkish translations out of the box
+- No build step or server required – just open `index.html`
+- Easily extendable JSON based prompt lists
 
-The page will keep a short history of previously generated prompts during your session.
 
-## Regenerating Prompts Data
+## Running locally
 
-If you want to change the set of prompts, edit the prompt file for the appropriate language such as `hellPrompts.en.json`. You can create additional files like `hellPrompts.tr.json` for new translations. Reload `index.html` and the page will automatically use your updated prompt list.
+1. Clone the repository.
+2. Open `index.html` in your favourite browser. The site works offline.
+3. Click **Generate Hellprompt** to get a new creepy idea and use the **EN/TR** toggle to switch languages.
 
-### Sanitizing Prompts
+## Customizing prompts
 
-Use `sanitize_prompts.py` to remove control characters from your prompt list.
+Prompts are stored in JSON files named `hellPrompts.<lang>.json`. Edit `hellPrompts.en.json` to modify English text or create files like `hellPrompts.tr.json` for translations.
 
+### Sanitizing prompt files
+
+Remove control characters after editing to keep the data clean:
+
+```bash
+python sanitize_prompts.py -i hellPrompts.en.json -o hellPrompts.en.json
 ```
-python sanitize_prompts.py
+
+### Translating prompt files
+
+`translate_prompts.py` uses `googletrans` to generate new language files. Example:
+
+```bash
+python translate_prompts.py
 ```
 
-By default it reads from `hellPrompts.json` and writes the cleaned prompts back to the same file. You can specify custom input and output files:
+The script reads `hellPrompts.en.json` and writes updates to `hellPrompts.tr.json`.
 
+## Requirements
+
+- Python 3.11
+- Packages listed in [requirements.txt](requirements.txt) (`googletrans`)
+
+Install them with:
+
+```bash
+pip install -r requirements.txt
 ```
-python sanitize_prompts.py -i my_prompts.json -o cleaned.json
+
+## Contributing
+
+Contributions are welcome! Please open a pull request with your improvements or new prompts. Make sure the scripts compile by running:
+
+```bash
+python -m py_compile sanitize_prompts.py translate_prompts.py
 ```
-
-### Translating Prompts
-
-To provide new languages, create a copy of `hellPrompts.en.json` and translate each string. Name the file using the `<lang>` code, e.g. `hellPrompts.tr.json` for Turkish. The language toggle will automatically load a file that matches its code.
 
 ## License
 
-This project is distributed under the [Apache License 2.0](LICENSE).
+Distributed under the [Apache License 2.0](LICENSE).
+<!-- keywords: horror prompts, ai prompt generator, creative writing, dystopian prompts, open source -->
