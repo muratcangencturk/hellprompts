@@ -2,6 +2,7 @@ const promptBox = document.getElementById("promptBox");
 const promptText = document.getElementById("promptText");
 const generateButton = document.getElementById("generateButton");
 const copyButton = document.getElementById("copyButton");
+const shareButton = document.getElementById("shareButton");
 const historyList = document.getElementById("historyList");
 const flameLogo = document.getElementById("flameLogo");
 const historyTitle = document.getElementById("historyTitle");
@@ -14,6 +15,7 @@ const translations = {
     loading: "SUMMONING...",
     loadingPrompts: "LOADING PROMPTS...",
     placeholder: 'Click "Generate" to create a hellish prompt...',
+    share: "Share",
     copy: "Copy",
     copied: "Copied!",
     historyTitle: "PREVIOUS SUMMONINGS",
@@ -24,6 +26,7 @@ const translations = {
     loading: "ÇAĞRILIYOR...",
     loadingPrompts: "İPUÇLARI YÜKLENİYOR...",
     placeholder: 'Şeytani bir komut oluşturmak için "Üret"e tıklayın...',
+    share: "Paylaş",
     copy: "Kopyala",
     copied: "Kopyalandı!",
     historyTitle: "ÖNCEKİ ÇAĞRILMALAR",
@@ -40,6 +43,7 @@ function applyTranslations(lang) {
   loadingText.textContent = t.loading;
   loadingPromptsText.textContent = t.loadingPrompts;
   promptText.textContent = t.placeholder;
+  shareButton.textContent = t.share;
   copyButton.textContent = t.copy;
   historyTitle.textContent = t.historyTitle;
   orderText.textContent = t.order;
@@ -148,11 +152,27 @@ function copyPromptToClipboard() {
   }
 }
 
+function sharePrompt() {
+  const textToShare = promptText.textContent;
+  if (!textToShare || promptText.classList.contains("placeholder-text")) return;
+  if (navigator.share) {
+    navigator
+      .share({ text: textToShare })
+      .catch((err) => console.error("Failed to share: ", err));
+  } else {
+    copyPromptToClipboard();
+  }
+}
+
 // Event listeners
 generateButton.addEventListener("click", generateRandomPrompt);
 copyButton.addEventListener("click", (e) => {
   e.stopPropagation();
   copyPromptToClipboard();
+});
+shareButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  sharePrompt();
 });
 langToggle.addEventListener("click", (e) => {
   const lang = e.target.dataset.lang;

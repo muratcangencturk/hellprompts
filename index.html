@@ -76,6 +76,7 @@
       </div>
 
       <div class="prompt-box" id="promptBox">
+        <button class="share-button" id="shareButton">Share</button>
         <button class="copy-button" id="copyButton">Copy</button>
         <div class="fire-effect"></div>
         <p class="prompt-text placeholder-text" id="promptText">
@@ -175,5 +176,12 @@
       order all hellprompts via +905539837625
     </p>
     <script src="app.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("service-worker.js");
+        });
+      }
+    </script>
   </body>
 </html>

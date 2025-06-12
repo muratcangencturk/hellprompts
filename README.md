@@ -11,12 +11,18 @@ HellPrompts is an open source horror, dystopian and AI writing prompt generator.
 - English and Turkish translations out of the box
 - No build step or server required – just open `index.html`
 - Easily extendable JSON based prompt lists
+- Share prompts using the Web Share API or copy them to your clipboard
+- Works offline thanks to a simple service worker
+
+## Offline usage
+
+The service worker caches all assets and prompt files so you can generate ideas even without an internet connection. Serve the project locally or host it on any static site to enable the PWA features.
 
 
 ## Running locally
 
 1. Clone the repository.
-2. Open `index.html` in your favourite browser. The site works offline.
+2. Serve the folder with a local web server (e.g. `python -m http.server`) and open `index.html`. This registers the service worker for offline use.
 3. Click **Generate Hellprompt** to get a new creepy idea and use the **EN/TR** toggle to switch languages.
 
 ## Customizing prompts
