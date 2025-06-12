@@ -38,6 +38,11 @@ python translate_prompts.py
 ```
 
 The script reads `hellPrompts.en.json` and writes updates to `hellPrompts.tr.json`.
+Install the dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Requirements
 
