@@ -74,6 +74,14 @@ Contributions are welcome! Please open a pull request with your improvements or 
 python -m py_compile sanitize_prompts.py translate_prompts.py
 ```
 
+Format the code before committing:
+
+```bash
+npx prettier --write .
+flake8 .
+```
+Configuration lives in [.prettierrc](.prettierrc) and [.flake8](.flake8).
+
 ## License
 
 Distributed under the [Apache License 2.0](LICENSE).

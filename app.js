@@ -56,7 +56,7 @@ function loadPrompts(lang) {
 const generateText = generateButton.querySelector(".generate-text");
 const loadingText = generateButton.querySelector(".loading-text");
 const loadingPromptsText = generateButton.querySelector(
-  ".loading-prompts-text",
+  ".loading-prompts-text"
 );
 
 // Disable button until prompts load
@@ -78,7 +78,7 @@ loadPrompts(currentLang)
 
 // Load prompt history from localStorage and keep the latest five prompts
 let promptHistory = JSON.parse(
-  localStorage.getItem("promptHistory") || "[]",
+  localStorage.getItem("promptHistory") || "[]"
 ).slice(0, 5);
 
 // Display history items
