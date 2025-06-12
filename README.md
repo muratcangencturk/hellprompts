@@ -40,13 +40,15 @@ python sanitize_prompts.py
 
 ### Translating prompt files
 
-`translate_prompts.py` uses `googletrans` to generate new language files. Example:
+`translate_prompts.py` uses `googletrans` to generate new language files. Pass
+the source file, target language and an optional index range:
 
 ```bash
-python translate_prompts.py
+python translate_prompts.py -i hellPrompts.en.json -l tr -s 1600 -e 3100
 ```
 
-The script reads `hellPrompts.en.json` and writes updates to `hellPrompts.tr.json`.
+This reads `hellPrompts.en.json` and writes translated lines to
+`hellPrompts.tr.json`.
 Install the dependencies first:
 
 ```bash
