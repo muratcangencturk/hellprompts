@@ -24,7 +24,7 @@ self.addEventListener("install", (event) => {
       const cache = await caches.open(CACHE_NAME);
       const promptFiles = await detectPromptFiles();
       await cache.addAll([...ASSETS, ...promptFiles]);
-    })(),
+    })()
   );
 });
 
@@ -43,12 +43,12 @@ self.addEventListener("fetch", (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
           return response;
         });
-      }),
+      })
     );
     return;
   }
 
   event.respondWith(
-    caches.match(request).then((response) => response || fetch(request)),
+    caches.match(request).then((response) => response || fetch(request))
   );
 });
