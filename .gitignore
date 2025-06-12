@@ -1,0 +1,20 @@
+# Python bytecode and cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node modules directory
+node_modules/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# IDE artifacts
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+
