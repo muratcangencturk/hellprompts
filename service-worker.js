@@ -1,5 +1,12 @@
-const CACHE_NAME = "hellprompts-cache-v2";
-const ASSETS = ["/", "index.html", "styles.css", "app.js"];
+const CACHE_NAME = "hellprompts-cache-v3";
+const ASSETS = [
+  "/",
+  "index.html",
+  "styles.css",
+  "app.js",
+  "hellPrompts.en.json",
+  "hellPrompts.tr.json",
+];
 
 function unique(array) {
   return Array.from(new Set(array));
