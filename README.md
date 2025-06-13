@@ -18,6 +18,11 @@ HellPrompts is an open source horror, dystopian and AI writing prompt generator.
 
 The service worker caches all assets and prompt files so you can generate ideas even without an internet connection. Serve the project locally or host it on any static site to enable the PWA features.
 
+When deploying updates you might still see an older version because the browser
+is using a previous cache. The service worker now removes outdated caches on
+activation. If needed you can also bump the `CACHE_NAME` constant in
+`service-worker.js` to force clients to refresh.
+
 
 ## Running locally
 
