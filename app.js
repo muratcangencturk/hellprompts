@@ -110,7 +110,7 @@ function generateRandomPrompt() {
   generateText.style.display = "none";
   loadingText.style.display = "block";
 
-  // Simulate loading time
+  // Briefly show the loading state
   setTimeout(() => {
     // Get random prompt
     const randomIndex = Math.floor(Math.random() * hellPrompts.length);
@@ -130,7 +130,7 @@ function generateRandomPrompt() {
     // Reset button state
     generateText.style.display = "block";
     loadingText.style.display = "none";
-  }, 1500);
+  }, 300);
 }
 
 // Copy prompt to clipboard
