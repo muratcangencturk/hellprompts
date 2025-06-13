@@ -69,7 +69,7 @@ let hellPrompts = [];
 applyTranslations(currentLang);
 loadPrompts(currentLang)
   .then((data) => {
-    hellPrompts = data;
+    hellPrompts = data.sort(() => Math.random() - 0.5); // Shuffle once on load
     generateButton.disabled = false;
     loadingPromptsText.style.display = "none";
     generateText.style.display = "block";
@@ -185,7 +185,7 @@ langToggle.addEventListener("click", (e) => {
   generateText.style.display = "none";
   loadPrompts(currentLang)
     .then((data) => {
-      hellPrompts = data;
+      hellPrompts = data.sort(() => Math.random() - 0.5); // Shuffle on lang change
       generateButton.disabled = false;
       loadingPromptsText.style.display = "none";
       generateText.style.display = "block";
